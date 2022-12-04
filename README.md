@@ -254,11 +254,11 @@ similar for an IAM role assumed by EC2
 test list objects
 
 ```bash
-aws s3api list-objects  --bucket arn:aws:s3:ap-southeast-1:392194582387:accesspoint/test
+aws s3api list-objects  --bucket arn:aws:s3:ap-southeast-1:ACCOUNT_ID:accesspoint/test
 ```
 
 test get-object
 
 ```bash
-aws s3api get-object --key test/image_1.png --bucket arn:aws:s3:ap-southeast-1:392194582387:accesspoint/test
+aws s3api get-object --key test/image_1.png --bucket arn:aws:s3:ap-southeast-1:ACCOUNT_ID:accesspoint/test
 ```
