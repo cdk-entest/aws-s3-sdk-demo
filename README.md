@@ -55,6 +55,53 @@ def test_verify_bucket_name(bucket_name: str):
         print(error)
 ```
 
+## Simple Upload and Download
+
+download with io and streaming body
+
+```py
+def test_get_object(bucket_name: str, key: str):
+    """
+    get object. return a Body stream
+    """
+    s3 = boto3.client("s3")
+    # get object which return binary stream
+    response = s3.get_object(Bucket=bucket_name, Key=key)
+    print(json.dumps(response, indent=2, default=str))
+    # write the return StreamingBody to local file
+    # which is iterator and read each byte
+    with io.FileIO("download_data.txt", "w") as file:
+        for x in response["Body"]:
+            file.write(x)
+```
+
+upload object and file
+
+```py
+def test_put_object(bucket_name: str, key: str):
+    """
+    upload an object to s3
+    """
+    # time stamp
+    time_stamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S.%f")
+    # low level client s3
+    s3 = boto3.client("s3")
+    # upload object to s3
+    response = s3.put_object(
+        Bucket=bucket_name,
+        Key=key,
+        # bytes or seekable file-like object
+        Body=bytes(f"Hello Dev class {time_stamp}", encoding="utf-8"),
+    )
+    # file
+    with open(
+        "data.txt",
+        "rb",
+    ) as file:
+        response = s3.put_object(Bucket=bucket_name, Key=key, Body=file)
+        print(json.dumps(response, indent=2, default=str))
+```
+
 ## Upload Multipart Boto3 SDK
 
 using a callback to monitor progress and threads
