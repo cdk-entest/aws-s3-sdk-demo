@@ -94,3 +94,9 @@ bucket policy
   ]
 }
 ```
+
+## copy the web to s3
+
+```bash
+aws s3 cp . s3://$BUCKET/ --recursive
+```
